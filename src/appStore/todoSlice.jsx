@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import {db} from "../config/fireBase";
+import {db, auth} from "../config/fireBase";
 import {
   collection,
   updateDoc,
@@ -7,14 +7,27 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  where,
+  query,
 } from "firebase/firestore";
 
 // Async thunk to fetch todos
 export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
-  try {
-    const querySnapshot = await getDocs(collection(db, "todo"));
+  const user = auth.currentUser;
 
-    return querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+  try {
+    if (user) {
+      const q = query(collection(db, "todo"), where("userId", "==", user.uid));
+      const querySnapshot = await getDocs(q);
+      const todos = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      // return querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+      return todos;
+    } else {
+      throw new Error("user not logged in");
+    }
   } catch (error) {
     console.log(error);
   }
@@ -25,6 +38,7 @@ export const addTodo = createAsyncThunk("todos/addTodo", async (todo) => {
   const docRef = await addDoc(collection(db, "todo"), todo);
   return {id: docRef.id, ...todo};
 });
+
 //  Async thunk to update todo
 export const updateTodo = createAsyncThunk("todos/editTodo", async (todo) => {
   const {id, ...data} = todo;
@@ -71,8 +85,8 @@ const todoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchTodos.fulfilled, (state, action) => {
-      state.items = action.payload.filter((todo) => !todo.completed);
-      state.completed = action.payload.filter((todo) => todo.completed);
+      state.items = action.payload.filter((todo) => !todo.completed) || [];
+      state.completed = action.payload.filter((todo) => todo.completed) || [];
     });
 
     builder.addCase(addTodo.fulfilled, (state, action) => {

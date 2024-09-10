@@ -1,13 +1,5 @@
 import SendIcon from "@mui/icons-material/Send";
-import {
-  TextField,
-  Box,
-  InputAdornment,
-  Stack,
-  Alert,
-  Paper,
-  IconButton,
-} from "@mui/material";
+import {TextField, Box, Stack, Alert, IconButton} from "@mui/material";
 import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
@@ -25,6 +17,8 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
         alignItems: "center",
         justifyContent: "center",
         marginBottom: "20px",
+        paddingBottom: "40px",
+        borderBottom: "1px solid #424949",
       }}
       noValidate
       autoComplete="off"
