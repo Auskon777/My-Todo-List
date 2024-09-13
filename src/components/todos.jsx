@@ -22,10 +22,13 @@ import {
   Box,
   Typography,
   Paper,
+  CardMedia,
+  Card,
 } from "@mui/material";
 import TodoForm from "./todoForm";
 import TodoStyle from "./TodoStyle";
 import Header from "./header";
+import LandingPage from "./landingPage";
 import {useNavigate} from "react-router-dom";
 
 const TodoList = () => {
@@ -255,31 +258,7 @@ const TodoList = () => {
           </Box>
         </Box>
       ) : (
-        <Paper
-          elevation={10}
-          sx={{
-            "&.MuiPaper-root": {backgroundColor: "#2c2c2c"},
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginTop: "250px",
-            maxWidth: "600px",
-            padding: "10px",
-          }}
-        >
-          <Box sx={{}}>
-            <Typography color={"white"}>Plan your day with Quick-Do</Typography>
-            <Typography color={"white"}>Sign Up to get started</Typography>
-            <Button
-              Variant="outlined"
-              onClick={() => {
-                navigate("/signUp");
-              }}
-            >
-              {" "}
-              Sign Up
-            </Button>
-          </Box>
-        </Paper>
+        <LandingPage />
       )}
 
       <Dialog

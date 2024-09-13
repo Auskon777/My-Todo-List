@@ -1,8 +1,9 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {loginUser} from "../appStore/userSlice";
-import {TextField, Button, Box, Paper} from "@mui/material";
+import {TextField, Typography, Button, Box, Paper} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -24,22 +25,43 @@ const Login = () => {
   return (
     <div>
       <h2 style={{textAlign: "center", color: "#d6dbdf"}}>Login</h2>
+      <Box
+        sx={{
+          marginTop: "50px",
+          display: "flex",
+          marginLeft: "auto",
+          marginRight: "auto",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "56px",
+          height: "56px",
+          backgroundColor: "#2c2c2c",
+          borderRadius: "50%",
+          color: "#e64a19",
+        }}
+      >
+        <AccountCircleOutlinedIcon
+          sx={{
+            fontSize: "28px",
+          }}
+        />
+      </Box>
       <Paper
         elevation={10}
         sx={{
           "&.MuiPaper-root": {backgroundColor: "#2c2c2c"},
-          marginLeft: "auto",
-          marginRight: "auto",
-          maxWidth: "600px",
+          maxWidth: "500px",
+          margin: "40px auto 0px auto",
           padding: "10px",
         }}
       >
         <Box
           component="form"
           sx={{
-            "& .MuiTextField-root": {m: 1},
+            "& .MuiTextField-root": {m: 2},
             display: "flex",
             justifyContent: "center",
+            alignItems: "center",
             padding: "20px",
             flexDirection: "column",
           }}
@@ -50,6 +72,7 @@ const Login = () => {
             }}
             sx={{
               input: {color: "#aeb6bf"},
+              width: "100%",
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   borderColor: "#aeb6bf",
@@ -72,6 +95,7 @@ const Login = () => {
             }}
             sx={{
               input: {color: "#aeb6bf"},
+              width: "100%",
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   borderColor: "#aeb6bf",
@@ -89,23 +113,58 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button
-            variant="outlined"
-            sx={{
-              "&.MuiButton-root": {
-                color: "#d6dbdf",
-                borderColor: "#e64a19",
-                // backgroundColor: "#e64a19",
-                "&:hover": {
-                  backgroundColor: "#d84315",
+          <Box sx={{marginTop: "20px"}}>
+            <Button
+              variant="outlined"
+              sx={{
+                "&.MuiButton-root": {
+                  color: "#d6dbdf",
+                  width: "10rem",
+                  borderColor: "#e64a19",
+                  // backgroundColor: "#e64a19",
+                  "&:hover": {
+                    backgroundColor: "#d84315",
+                  },
                 },
-              },
-            }}
-            onClick={handleLogin}
-          >
-            Login
-          </Button>
+              }}
+              onClick={handleLogin}
+            >
+              Login
+            </Button>
+          </Box>
           {status === "failed" && <p>{error}</p>}
+
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "10px",
+            }}
+          >
+            <Box>
+              <Typography color={"#d6dbdf"}>Don't have an account?</Typography>
+            </Box>
+
+            <Button
+              sx={{
+                "&.MuiButton-root": {
+                  color: "#e64a19",
+                  width: "5.5rem",
+                  // backgroundColor: "#e64a19",
+                  "&:hover": {
+                    backgroundColor: "#d84315",
+                    color: "#d6dbdf",
+                  },
+                },
+              }}
+              onClick={() => {
+                navigate("/signUp");
+              }}
+            >
+              Sign up
+            </Button>
+          </Box>
         </Box>
       </Paper>
     </div>
