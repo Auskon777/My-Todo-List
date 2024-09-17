@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import "dayjs/locale/en";
 import {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
@@ -8,8 +9,8 @@ import {
   updateCompletedTodo,
   updateTodo,
   addTodo,
-} from "../appStore/todoSlice";
-import {loginUser, logoutUser} from "../appStore/userSlice";
+} from "../Features/todoSlice";
+import {loginUser, logoutUser} from "../Features/userSlice";
 import {auth} from "../config/fireBase";
 import {onAuthStateChanged} from "firebase/auth";
 
@@ -26,12 +27,14 @@ import {
   Card,
 } from "@mui/material";
 import TodoForm from "./todoForm";
-import TodoStyle from "./TodoStyle";
+import ActiveTodoStyle from "./activeTodoStyle";
+import CompletedTodoStyle from "./completedTodoStyle";
 import Header from "./header";
 import LandingPage from "./landingPage";
 import {useNavigate} from "react-router-dom";
 
 const TodoList = () => {
+  dayjs.locale("en");
   const todos = useSelector((state) => state.todo.items);
   const status = useSelector((state) => state.todo.status);
   const completedTodos = useSelector((state) => state.todo.completed);
@@ -69,13 +72,16 @@ const TodoList = () => {
   }, [dispatch]);
 */
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchTodos());
-    }
+    const fetch = () => {
+      if (status === "idle") {
+        dispatch(fetchTodos());
+      }
+    };
+    return () => fetch();
   }, [status, dispatch]);
 
   // console.log(todos);
-  // console.log(completedTodos);
+  console.log(completedTodos);
 
   const handleChange = (event) => {
     const {name, value} = event.target;
@@ -91,7 +97,7 @@ const TodoList = () => {
     e.preventDefault();
 
     // Convert the date to a string using the toString method
-    const dateString = formData.date.toString();
+    const dateString = dayjs(formData.date).format("LL");
     // checking if user is login
     const user = auth.currentUser;
     if (user) {
@@ -236,7 +242,7 @@ const TodoList = () => {
           </Box>
           {isCompleted === false &&
             todos.map((todo) => (
-              <TodoStyle
+              <ActiveTodoStyle
                 key={todo.id}
                 todo={todo}
                 handleDeleteTodo={handleDeleteTodo}
@@ -247,12 +253,11 @@ const TodoList = () => {
           <Box>
             {isCompleted === true &&
               completedTodos.map((todo) => (
-                <TodoStyle
+                <CompletedTodoStyle
                   key={todo.id}
                   todo={todo}
                   handleDeleteTodo={handleDeleteTodo}
                   handleToggle={handleToggle}
-                  handleEdit={handleEdit}
                 />
               ))}
           </Box>

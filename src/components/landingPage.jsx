@@ -54,10 +54,29 @@ export default function LandingPage() {
             </Box>
             <Box
               sx={{
-                margin: "50px 0px 20px 20px",
-                width: "200px",
+                display: "flex",
+                margin: "50px 0px 0px 20px",
+                width: "fit-content",
               }}
             >
+              <Button
+                variant="contained"
+                sx={{
+                  "&.MuiButton-root": {
+                    backgroundColor: "#e64a19",
+                    color: "#2c2c2c",
+                    // backgroundColor: "#e64a19",
+                    "&:hover": {
+                      backgroundColor: "#d84315",
+                    },
+                  },
+                }}
+                onClick={() => {
+                  navigate("/signUp");
+                }}
+              >
+                get started
+              </Button>
               <Button
                 variant="outlined"
                 sx={{
@@ -71,10 +90,10 @@ export default function LandingPage() {
                   },
                 }}
                 onClick={() => {
-                  navigate("/signUp");
+                  navigate("/login");
                 }}
               >
-                get started
+                login
               </Button>
             </Box>
           </Box>
@@ -92,10 +111,11 @@ export default function LandingPage() {
           <Box
             sx={{
               display: "flex",
+
               justifyContent: "space-between",
             }}
           >
-            <Box sx={{maxWidth: "600px", marginTop: "20px"}}>
+            <Box sx={{marginTop: "20px", marginRight: "20px", width: "40%"}}>
               <Typography variant="h3" color={"#d6dbdf"}>
                 Hello!
               </Typography>
@@ -110,19 +130,21 @@ export default function LandingPage() {
               </Typography>
               <Box
                 sx={{
+                  display: "flex",
                   margin: "50px 0px 0px 20px",
-                  width: "200px",
+                  width: "220px",
+                  justifyContent: "space-between",
                 }}
               >
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   sx={{
                     "&.MuiButton-root": {
-                      borderColor: "#e64a19",
-                      color: "#d6dbdf",
+                      backgroundColor: "#e64a19",
+                      color: "#2c2c2c",
                       // backgroundColor: "#e64a19",
                       "&:hover": {
-                        backgroundColor: "#d84315",
+                        backgroundColor: "#e33333",
                       },
                     },
                   }}
@@ -132,14 +154,32 @@ export default function LandingPage() {
                 >
                   get started
                 </Button>
+                <Button
+                  variant="outlined"
+                  sx={{
+                    "&.MuiButton-root": {
+                      borderColor: "#e64a19",
+                      color: "#d6dbdf",
+                      // backgroundColor: "#e64a19",
+                      "&:hover": {
+                        backgroundColor: "#e33333",
+                      },
+                    },
+                  }}
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                >
+                  login
+                </Button>
               </Box>
             </Box>
-            <Box>
+            <Box sx={{marginRight: "50px"}}>
               <Card>
                 <CardMedia
                   component="img"
                   sx={{
-                    width: "100%",
+                    width: "500px",
                     minHeight: "350px",
                     maxHeight: "450px",
                   }}

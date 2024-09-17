@@ -48,12 +48,12 @@ export default function TodoStyle({
             </motion.div>
           </Box>
           <Box sx={{display: "block", width: "100%"}}>
-            <Box sx={{}}>
+            <Box sx={{display: "flex", flexWrap: "wrap", overflow: "hidden"}}>
               <Typography variant="h6" color={"#d6dbdf"}>
                 {todo.title}
               </Typography>
             </Box>
-            <Box sx={{}}>
+            <Box sx={{display: "flex", flexWrap: "wrap", overflow: "hidden"}}>
               <Typography fontSize={"0.9rem"} color={"#aeb6bf"}>
                 {todo.description}
               </Typography>

@@ -2,7 +2,7 @@ import {StrictMode} from "react";
 import {createRoot} from "react-dom/client";
 import App from "./App.jsx";
 import {Provider} from "react-redux";
-import {store} from "./appStore/store";
+import {store} from "./Features/store";
 import {CssBaseline, GlobalStyles} from "@mui/material";
 
 createRoot(document.getElementById("root")).render(

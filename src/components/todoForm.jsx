@@ -1,5 +1,13 @@
 import SendIcon from "@mui/icons-material/Send";
-import {TextField, Box, Stack, Alert, IconButton} from "@mui/material";
+import {
+  TextField,
+  Button,
+  Box,
+  Stack,
+  Alert,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
@@ -117,11 +125,10 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
               }}
             />
           </LocalizationProvider>
-          <IconButton
+          <Button
             variant="contained"
             type="submit"
             sx={{
-              m: 1,
               width: "10rem",
               marginTop: "20px",
               backgroundColor: "#333333",
@@ -131,8 +138,8 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
               },
             }}
           >
-            <SendIcon />
-          </IconButton>
+            <Typography>Add todo</Typography> <SendIcon />
+          </Button>
         </Box>
       ) : (
         <Box
@@ -245,7 +252,7 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
             variant="contained"
             type="submit"
             sx={{
-              m: 1,
+              m: 2,
               width: "3rem",
               backgroundColor: "#333333",
               color: "#e64a19",

@@ -8,7 +8,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import {logoutUser} from "../appStore/userSlice";
+import {logoutUser} from "../Features/userSlice";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";

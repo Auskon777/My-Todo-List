@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {loginUser} from "../appStore/userSlice";
+import {loginUser} from "../Features/userSlice";
 import {TextField, Typography, Button, Box, Paper} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
@@ -113,6 +113,26 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <Box sx={{display: "flex", alignItems: "center", marginLeft: "auto"}}>
+            <Button
+              sx={{
+                "&.MuiButton-root": {
+                  color: "#e64a19",
+                  width: "12.5rem",
+                  // backgroundColor: "#e64a19",
+                  "&:hover": {
+                    // backgroundColor: "#d84315",
+                    color: "#d6dbdf",
+                  },
+                },
+              }}
+              onClick={() => {
+                navigate("/forgotPassword");
+              }}
+            >
+              <Typography variant="body2">forgot password?</Typography>
+            </Button>
+          </Box>
           <Box sx={{marginTop: "20px"}}>
             <Button
               variant="outlined"
@@ -153,7 +173,7 @@ const Login = () => {
                   width: "5.5rem",
                   // backgroundColor: "#e64a19",
                   "&:hover": {
-                    backgroundColor: "#d84315",
+                    // backgroundColor: "#d84315",
                     color: "#d6dbdf",
                   },
                 },

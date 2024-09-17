@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {signUpUser} from "../appStore/userSlice";
+import {signUpUser} from "../Features/userSlice";
 import {TextField, Button, Box, Paper, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";

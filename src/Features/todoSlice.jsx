@@ -103,6 +103,9 @@ const todoSlice = createSlice({
 
     builder.addCase(deleteTodo.fulfilled, (state, action) => {
       state.items = state.items.filter((todo) => todo.id !== action.payload);
+      state.completed = state.completed.filter(
+        (todo) => todo.id !== action.payload
+      );
     });
     builder.addCase(updateCompletedTodo.fulfilled, (state, action) => {
       const {id, completed} = action.payload;
