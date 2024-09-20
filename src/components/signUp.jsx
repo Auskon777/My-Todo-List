@@ -1,7 +1,14 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {signUpUser} from "../Features/userSlice";
-import {TextField, Button, Box, Paper, Typography} from "@mui/material";
+import {
+  TextField,
+  Button,
+  Box,
+  Paper,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
@@ -14,7 +21,8 @@ const SignUp = () => {
 
   const {status, error} = useSelector((state) => state.user);
 
-  const handleSignUp = () => {
+  const handleSignUp = (e) => {
+    e.preventDefault();
     dispatch(signUpUser({email, password})).then((result) => {
       if (result.meta.requestStatus === "fulfilled") {
         setEmail("");
@@ -88,6 +96,8 @@ const SignUp = () => {
               },
             }}
             label="Email"
+            type="email"
+            required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -112,26 +122,32 @@ const SignUp = () => {
             }}
             label="Password"
             type="password"
+            required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <Box sx={{marginTop: "20px"}}>
             <Button
-              variant="outlined"
+              variant="contained"
               sx={{
                 "&.MuiButton-root": {
-                  color: "#d6dbdf",
+                  color: "#e64a19",
                   width: "10rem",
-                  borderColor: "#e64a19",
-                  // backgroundColor: "#e64a19",
+                  backgroundColor: "#333333",
+                  border: "1px solid #e64a19",
                   "&:hover": {
                     backgroundColor: "#d84315",
+                    color: "#d6dbdf",
                   },
                 },
               }}
               onClick={handleSignUp}
             >
-              Sign Up
+              {status === "loading" ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Sign Up"
+              )}
             </Button>
           </Box>
           {status === "failed" && <p>{error}</p>}
@@ -145,7 +161,7 @@ const SignUp = () => {
             }}
           >
             <Box>
-              <Typography color={"#d6dbdf"}>
+              <Typography variant="body2" color={"#d6dbdf"}>
                 Already have an account?
               </Typography>
             </Box>
@@ -157,7 +173,6 @@ const SignUp = () => {
                   width: "5.5rem",
                   // backgroundColor: "#e64a19",
                   "&:hover": {
-                    backgroundColor: "#d84315",
                     color: "#d6dbdf",
                   },
                 },

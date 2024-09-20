@@ -1,4 +1,9 @@
-import SendIcon from "@mui/icons-material/Send";
+import {LocalizationProvider} from "@mui/x-date-pickers";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import {DatePicker} from "@mui/x-date-pickers/DatePicker";
+import {useMediaQuery} from "@mui/material";
+
 import {
   TextField,
   Button,
@@ -8,11 +13,7 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import {LocalizationProvider} from "@mui/x-date-pickers";
-import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import {DatePicker} from "@mui/x-date-pickers/DatePicker";
-import {useMediaQuery} from "@mui/material";
-//import dayjs from "dayjs";
+import SendIcon from "@mui/icons-material/Send";
 
 const TodoForm = ({handleSubmit, handleChange, formData}) => {
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -91,9 +92,34 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
             <DatePicker
               label="Select Date"
               value={formData.date}
+              disablePast={true}
               onChange={(newDate) =>
                 handleChange({target: {name: "date", value: newDate}})
               }
+              slotProps={{
+                layout: {
+                  sx: {
+                    color: "#d6dbdf",
+                    border: "1px solid #aeb6bf",
+                    backgroundColor: "rgba(0, 0, 0,0.8)",
+                    ".MuiPickersDay-root": {
+                      color: "#d6dbdf", // Days text color
+                    },
+                    ".MuiPickersDay-root.Mui-selected": {
+                      backgroundColor: "#e64a19", // Selected date circle color
+                    },
+                    ".MuiIconButton-root": {
+                      color: "#e64a19", // Arrows for month and year picker color
+                    },
+                    ".MuiPickersArrowSwitcher-root .MuiIconButton-root": {
+                      color: "#e64a19", // Specific arrow buttons for switching months and years
+                    },
+                    ".MuiDayCalendar-weekDayLabel": {
+                      color: "white", // Correct selector for week labels
+                    },
+                  },
+                },
+              }}
               slots={{
                 textField: (props) => (
                   <TextField
@@ -116,7 +142,7 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
                           borderColor: "#aeb6bf",
                         },
                         "& .MuiSvgIcon-root": {
-                          color: "#aeb6bf",
+                          color: "#e64a19",
                         },
                       },
                     }}
@@ -132,9 +158,11 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
               width: "10rem",
               marginTop: "20px",
               backgroundColor: "#333333",
+              border: "1px solid #e64a19 ",
               color: "#e64a19",
               "&:hover": {
-                backgroundColor: "#ff9800",
+                backgroundColor: "#d84315",
+                color: "#aeb6bf",
               },
             }}
           >
@@ -213,10 +241,35 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               label="Select Date"
+              disablePast={true}
               value={formData.date}
               onChange={(newDate) =>
                 handleChange({target: {name: "date", value: newDate}})
               }
+              slotProps={{
+                layout: {
+                  sx: {
+                    color: "#d6dbdf",
+                    border: "1px solid #aeb6bf",
+                    backgroundColor: "rgba(0, 0, 0,0.8)",
+                    ".MuiPickersDay-root": {
+                      color: "#d6dbdf", // Days text color
+                    },
+                    ".MuiPickersDay-root.Mui-selected": {
+                      backgroundColor: "#e64a19", // Selected date circle color
+                    },
+                    ".MuiIconButton-root": {
+                      color: "#e64a19", // Arrows for month and year picker color
+                    },
+                    ".MuiPickersArrowSwitcher-root .MuiIconButton-root": {
+                      color: "#e64a19", // Specific arrow buttons for switching months and years
+                    },
+                    ".MuiDayCalendar-weekDayLabel": {
+                      color: "white", // Correct selector for week labels
+                    },
+                  },
+                },
+              }}
               slots={{
                 textField: (props) => (
                   <TextField
@@ -239,7 +292,7 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
                           borderColor: "#aeb6bf",
                         },
                         "& .MuiSvgIcon-root": {
-                          color: "#aeb6bf",
+                          color: "#e64a19",
                         },
                       },
                     }}
@@ -255,6 +308,7 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
               m: 2,
               width: "3rem",
               backgroundColor: "#333333",
+              border: "1px solid #e64a19 ",
               color: "#e64a19",
               "&:hover": {
                 backgroundColor: "#ff9800",

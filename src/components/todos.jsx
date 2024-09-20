@@ -188,15 +188,16 @@ const TodoList = () => {
             }}
           >
             <Button
-              variant="outlined"
+              variant="contained"
               sx={{
                 "&.MuiButton-root": {
                   marginRight: "5px",
-                  borderColor: "#e64a19",
-                  color: "#d6dbdf",
-                  // backgroundColor: "#e64a19",
+                  // borderColor: "#e64a19",
+                  color: "#e64a19",
+                  backgroundColor: "#333333",
                   "&:hover": {
                     backgroundColor: "#d84315",
+                    color: "#d6dbdf",
                   },
                 },
               }}
@@ -208,14 +209,15 @@ const TodoList = () => {
             </Button>
 
             <Button
-              variant="outlined"
+              variant="contained"
               sx={{
                 "&.MuiButton-root": {
-                  color: "#d6dbdf",
-                  borderColor: "#e64a19",
-                  // backgroundColor: "#e64a19",
+                  color: "#e64a19",
+                  //borderColor: "#e64a19",
+                  backgroundColor: "#333333",
                   "&:hover": {
                     backgroundColor: "#d84315",
+                    color: "#d6dbdf",
                   },
                 },
               }}
@@ -230,14 +232,14 @@ const TodoList = () => {
             sx={{
               margin: "10px",
               padding: "10px",
-              width: "fit-content",
+              width: "100%",
               backgroundColor: "#333333",
             }}
           >
             {isCompleted ? (
-              <Typography color={"#e64a19"}>COMPLETED TODOS</Typography>
+              <Typography color={"#d6dbdf"}>COMPLETED TODOS</Typography>
             ) : (
-              <Typography color={"#e64a19"}>ACTIVE TODOS</Typography>
+              <Typography color={"#d6dbdf"}>ACTIVE TODOS</Typography>
             )}
           </Box>
           {isCompleted === false &&
@@ -267,12 +269,12 @@ const TodoList = () => {
       )}
 
       <Dialog
-        sx={{"& .MuiPaper-root": {backgroundColor: "#2c2c2c"}}}
+        sx={{"& .MuiPaper-root": {backgroundColor: "#2c2c2c", width: "100%"}}}
         open={open}
         onClose={handleClose}
       >
         <DialogTitle>
-          <Typography color={"white"}>Edit Todo</Typography>
+          <Typography color={"#d6dbdf"}>Edit Todo</Typography>
         </DialogTitle>
         <DialogContent>
           <TodoForm
@@ -282,8 +284,22 @@ const TodoList = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            <Typography color={"white"}>Cancel</Typography>
+          <Button
+            variant="contained"
+            sx={{
+              "&.MuiButton-root": {
+                color: "#e64a19",
+                width: "6rem",
+                backgroundColor: "#333333",
+                "&:hover": {
+                  backgroundColor: "#d84315",
+                  color: "#d6dbdf",
+                },
+              },
+            }}
+            onClick={handleClose}
+          >
+            Cancel
           </Button>
         </DialogActions>
       </Dialog>

@@ -56,18 +56,20 @@ export default function LandingPage() {
               sx={{
                 display: "flex",
                 margin: "50px 0px 0px 20px",
-                width: "fit-content",
+                width: "220px",
+                justifyContent: "space-between",
               }}
             >
               <Button
                 variant="contained"
                 sx={{
                   "&.MuiButton-root": {
-                    backgroundColor: "#e64a19",
-                    color: "#2c2c2c",
-                    // backgroundColor: "#e64a19",
+                    backgroundColor: "#333333",
+                    border: "1px solid #e64a19 ",
+                    color: "#e64a19",
                     "&:hover": {
                       backgroundColor: "#d84315",
+                      color: "#d6dbdf",
                     },
                   },
                 }}
@@ -78,14 +80,15 @@ export default function LandingPage() {
                 get started
               </Button>
               <Button
-                variant="outlined"
+                variant="contained"
                 sx={{
                   "&.MuiButton-root": {
-                    borderColor: "#e64a19",
-                    color: "#d6dbdf",
-                    // backgroundColor: "#e64a19",
+                    backgroundColor: "#333333",
+                    color: "#e64a19",
+
                     "&:hover": {
                       backgroundColor: "#d84315",
+                      color: "#d6dbdf",
                     },
                   },
                 }}
@@ -111,7 +114,6 @@ export default function LandingPage() {
           <Box
             sx={{
               display: "flex",
-
               justifyContent: "space-between",
             }}
           >
@@ -140,11 +142,12 @@ export default function LandingPage() {
                   variant="contained"
                   sx={{
                     "&.MuiButton-root": {
-                      backgroundColor: "#e64a19",
-                      color: "#2c2c2c",
-                      // backgroundColor: "#e64a19",
+                      backgroundColor: "#333333",
+                      border: "1px solid #e64a19",
+                      color: "#e64a19",
                       "&:hover": {
-                        backgroundColor: "#e33333",
+                        backgroundColor: "#d84315",
+                        color: "#d6dbdf",
                       },
                     },
                   }}
@@ -155,14 +158,14 @@ export default function LandingPage() {
                   get started
                 </Button>
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   sx={{
                     "&.MuiButton-root": {
-                      borderColor: "#e64a19",
-                      color: "#d6dbdf",
-                      // backgroundColor: "#e64a19",
+                      backgroundColor: "#333333",
+                      color: "#e64a19",
                       "&:hover": {
-                        backgroundColor: "#e33333",
+                        backgroundColor: "#d84315",
+                        color: "#d6dbdf",
                       },
                     },
                   }}
