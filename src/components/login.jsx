@@ -23,7 +23,7 @@ const Login = () => {
     e.preventDefault();
     dispatch(loginUser({email, password})).then((result) => {
       if (result.meta.requestStatus === "fulfilled") {
-        navigate("/");
+        navigate("/home");
         setEmail("");
         setPassword("");
       }

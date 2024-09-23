@@ -27,7 +27,7 @@ const SignUp = () => {
       if (result.meta.requestStatus === "fulfilled") {
         setEmail("");
         setPassword("");
-        navigate("/");
+        navigate("/login");
       }
     });
   };

@@ -8,12 +8,13 @@ import {loginUser, logoutUser} from "./Features/userSlice";
 import SignUp from "./components/signUp";
 import Login from "./components/login";
 import ForgotPassword from "./components/forgotPassword";
+import LandingPage from "./components/landingPage";
 
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is logged in, you can dispatch an action to update Redux state
@@ -31,13 +32,14 @@ function App() {
 
     // Clean up subscription on unmount
     return () => unsubscribe();
-  }, [dispatch]);
-
+  }, [dispatch, user]);
+*/
   return (
     <div>
       <Router>
         <Routes>
-          <Route path="/" element={<TodoList />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/home" element={<TodoList />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />

@@ -12,7 +12,7 @@ export default function CompletedStyles({
       <Paper
         elevation={10}
         sx={{
-          margin: "10px 5px",
+          margin: "0px 5px",
           backgroundColor: "rgba(87, 99, 117, 0)",
         }}
       >

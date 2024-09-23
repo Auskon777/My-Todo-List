@@ -23,7 +23,7 @@ export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
         id: doc.id,
         ...doc.data(),
       }));
-      // return querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+
       return todos;
     } else {
       throw new Error("user not logged in");
@@ -85,7 +85,10 @@ const todoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchTodos.fulfilled, (state, action) => {
-      state.items = action.payload.filter((todo) => !todo.completed) || [];
+      state.items =
+        action.payload
+          .filter((todo) => !todo.completed)
+          .sort((a, b) => b.createdAt - a.createdAt) || [];
       state.completed = action.payload.filter((todo) => todo.completed) || [];
     });
 

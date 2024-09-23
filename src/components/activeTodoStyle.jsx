@@ -14,7 +14,7 @@ export default function TodoStyle({
       <Paper
         elevation={10}
         sx={{
-          margin: "10px 5px",
+          margin: "0px 5px",
           backgroundColor: "rgba(87, 99, 117, 0)",
         }}
       >
@@ -23,7 +23,6 @@ export default function TodoStyle({
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-
             padding: "5px",
           }}
         >

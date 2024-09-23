@@ -166,7 +166,7 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
               },
             }}
           >
-            <Typography>Add todo</Typography> <SendIcon />
+            <Typography>Add </Typography> <SendIcon />
           </Button>
         </Box>
       ) : (
@@ -178,7 +178,6 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "center",
             marginBottom: "20px",
             paddingBottom: "40px",
             borderBottom: "1px solid #424949",
@@ -311,7 +310,8 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
               border: "1px solid #e64a19 ",
               color: "#e64a19",
               "&:hover": {
-                backgroundColor: "#ff9800",
+                backgroundColor: "#d84315",
+                color: "#d6dbdf",
               },
             }}
           >

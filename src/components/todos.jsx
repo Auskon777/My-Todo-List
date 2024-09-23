@@ -2,7 +2,6 @@ import dayjs from "dayjs";
 import "dayjs/locale/en";
 import {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
-
 import {
   fetchTodos,
   deleteTodo,
@@ -30,7 +29,6 @@ import TodoForm from "./todoForm";
 import ActiveTodoStyle from "./activeTodoStyle";
 import CompletedTodoStyle from "./completedTodoStyle";
 import Header from "./header";
-import LandingPage from "./landingPage";
 import {useNavigate} from "react-router-dom";
 
 const TodoList = () => {
@@ -51,7 +49,8 @@ const TodoList = () => {
     description: "",
     date: null,
   });
-  /* useEffect(() => {
+
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is logged in, you can dispatch an action to update Redux state
@@ -69,8 +68,8 @@ const TodoList = () => {
 
     // Clean up subscription on unmount
     return () => unsubscribe();
-  }, [dispatch]);
-*/
+  }, [dispatch, user]);
+
   useEffect(() => {
     const fetch = () => {
       if (status === "idle") {
@@ -80,8 +79,11 @@ const TodoList = () => {
     return () => fetch();
   }, [status, dispatch]);
 
-  // console.log(todos);
-  console.log(completedTodos);
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   const handleChange = (event) => {
     const {name, value} = event.target;
@@ -95,36 +97,39 @@ const TodoList = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Convert the date to a string using the toString method
-    const dateString = dayjs(formData.date).format("LL");
-    // checking if user is login
-    const user = auth.currentUser;
-    if (user) {
-      const dataToSubmit = {
-        ...formData,
-        date: dateString, // Replace the date with the string representation
-        completed: formData.completed || false,
-        userId: user.uid,
-      };
-      if (editTodo) {
-        dispatch(
-          updateTodo({
-            id: editTodo.id,
-            ...dataToSubmit,
-          })
-        );
+    if (formData.title && formData.description && formData.date) {
+      // Convert date to dayjs locale method
+      const dateString = dayjs(formData.date).format("ll");
+      const time = Date.now();
+      // checking if user is login
+      const user = auth.currentUser;
+      if (user) {
+        const dataToSubmit = {
+          ...formData,
+          date: dateString, // Replace the date with the string representation
+          completed: formData.completed || false,
+          userId: user.uid,
+          createdAt: time,
+        };
+        if (editTodo) {
+          dispatch(
+            updateTodo({
+              id: editTodo.id,
+              ...dataToSubmit,
+            })
+          );
+        } else {
+          dispatch(addTodo(dataToSubmit));
+        }
+        setFormData({
+          title: "",
+          description: "",
+          date: null,
+        });
+        setOpen(false);
       } else {
-        dispatch(addTodo(dataToSubmit));
+        console.error("user not logged in");
       }
-      setFormData({
-        title: "",
-        description: "",
-        date: null,
-      });
-      setOpen(false);
-    } else {
-      console.error("user not logged in");
     }
   };
   // handle delete function
@@ -159,150 +164,167 @@ const TodoList = () => {
 
   return (
     <div>
-      <Header />
       {user ? (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            backgroundColor: "#2c2c2c",
-            width: "fit-content",
-            padding: "20px 20px",
-            marginTop: "150px",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
-          <TodoForm
-            formData={formData}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-          />
+        <div>
+          <Header />
           <Box
             sx={{
               display: "flex",
-              justifyContent: "start",
-              alignItems: "center",
-              margin: "20px 0px",
-              width: "fit-content",
+              flexDirection: "column",
+              backgroundColor: "#2c2c2c",
+              maxWidth: "700px",
+              padding: "20px 20px",
+              marginBottom: "100px",
+              marginTop: "150px",
+              marginLeft: "auto",
+              marginRight: "auto",
             }}
           >
-            <Button
-              variant="contained"
-              sx={{
-                "&.MuiButton-root": {
-                  marginRight: "5px",
-                  // borderColor: "#e64a19",
-                  color: "#e64a19",
-                  backgroundColor: "#333333",
-                  "&:hover": {
-                    backgroundColor: "#d84315",
-                    color: "#d6dbdf",
-                  },
-                },
-              }}
-              onClick={() => {
-                isSetCompleted(false);
-              }}
-            >
-              Active
-            </Button>
-
-            <Button
-              variant="contained"
-              sx={{
-                "&.MuiButton-root": {
-                  color: "#e64a19",
-                  //borderColor: "#e64a19",
-                  backgroundColor: "#333333",
-                  "&:hover": {
-                    backgroundColor: "#d84315",
-                    color: "#d6dbdf",
-                  },
-                },
-              }}
-              onClick={() => {
-                isSetCompleted(true);
-              }}
-            >
-              Completed
-            </Button>
-          </Box>
-          <Box
-            sx={{
-              margin: "10px",
-              padding: "10px",
-              width: "100%",
-              backgroundColor: "#333333",
-            }}
-          >
-            {isCompleted ? (
-              <Typography color={"#d6dbdf"}>COMPLETED TODOS</Typography>
-            ) : (
-              <Typography color={"#d6dbdf"}>ACTIVE TODOS</Typography>
-            )}
-          </Box>
-          {isCompleted === false &&
-            todos.map((todo) => (
-              <ActiveTodoStyle
-                key={todo.id}
-                todo={todo}
-                handleDeleteTodo={handleDeleteTodo}
-                handleToggle={handleToggle}
-                handleEdit={handleEdit}
+            <Box>
+              <Typography variant="h5" color={"#e64a19"}>
+                Create event
+              </Typography>
+            </Box>
+            <Box sx={{marginLeft: "0px"}}>
+              <TodoForm
+                formData={formData}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
               />
-            ))}
-          <Box>
-            {isCompleted === true &&
-              completedTodos.map((todo) => (
-                <CompletedTodoStyle
+            </Box>
+            <Box>
+              <Typography variant="h5" color={"#e64a19"}>
+                My events
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "start",
+                alignItems: "center",
+                margin: "20px 0px",
+                width: "fit-content",
+              }}
+            >
+              <Button
+                variant="contained"
+                sx={{
+                  "&.MuiButton-root": {
+                    marginRight: "5px",
+                    color: "#e64a19",
+                    backgroundColor: "#333333",
+                    "&:hover": {
+                      backgroundColor: "#d84315",
+                      color: "#d6dbdf",
+                    },
+                  },
+                }}
+                onClick={() => {
+                  isSetCompleted(false);
+                }}
+              >
+                Active
+              </Button>
+
+              <Button
+                variant="contained"
+                sx={{
+                  "&.MuiButton-root": {
+                    color: "#e64a19",
+                    //borderColor: "#e64a19",
+                    backgroundColor: "#333333",
+                    "&:hover": {
+                      backgroundColor: "#d84315",
+                      color: "#d6dbdf",
+                    },
+                  },
+                }}
+                onClick={() => {
+                  isSetCompleted(true);
+                }}
+              >
+                Completed
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                margin: "5px",
+              }}
+            >
+              {isCompleted ? (
+                <Typography variant="h5" color={"#e64a19"}>
+                  Completed
+                </Typography>
+              ) : (
+                <Typography variant="h5" color={"#e64a19"}>
+                  Active
+                </Typography>
+              )}
+            </Box>
+            {isCompleted === false &&
+              todos.map((todo) => (
+                <ActiveTodoStyle
                   key={todo.id}
                   todo={todo}
                   handleDeleteTodo={handleDeleteTodo}
                   handleToggle={handleToggle}
+                  handleEdit={handleEdit}
                 />
               ))}
+            <Box>
+              {isCompleted === true &&
+                completedTodos.map((todo) => (
+                  <CompletedTodoStyle
+                    key={todo.id}
+                    todo={todo}
+                    handleDeleteTodo={handleDeleteTodo}
+                    handleToggle={handleToggle}
+                  />
+                ))}
+            </Box>
           </Box>
-        </Box>
-      ) : (
-        <LandingPage />
-      )}
 
-      <Dialog
-        sx={{"& .MuiPaper-root": {backgroundColor: "#2c2c2c", width: "100%"}}}
-        open={open}
-        onClose={handleClose}
-      >
-        <DialogTitle>
-          <Typography color={"#d6dbdf"}>Edit Todo</Typography>
-        </DialogTitle>
-        <DialogContent>
-          <TodoForm
-            formData={formData}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            variant="contained"
+          <Dialog
             sx={{
-              "&.MuiButton-root": {
-                color: "#e64a19",
-                width: "6rem",
-                backgroundColor: "#333333",
-                "&:hover": {
-                  backgroundColor: "#d84315",
-                  color: "#d6dbdf",
-                },
-              },
+              "& .MuiPaper-root": {backgroundColor: "#2c2c2c", width: "100%"},
             }}
-            onClick={handleClose}
+            open={open}
+            onClose={handleClose}
           >
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
+            <DialogTitle>
+              <Typography color={"#d6dbdf"}>Edit Todo</Typography>
+            </DialogTitle>
+            <DialogContent>
+              <TodoForm
+                formData={formData}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                variant="contained"
+                sx={{
+                  "&.MuiButton-root": {
+                    color: "#e64a19",
+                    width: "6rem",
+                    backgroundColor: "#333333",
+                    "&:hover": {
+                      backgroundColor: "#d84315",
+                      color: "#d6dbdf",
+                    },
+                  },
+                }}
+                onClick={handleClose}
+              >
+                Cancel
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+      ) : (
+        <div>Redirecting to login...</div>
+      )}
     </div>
   );
 };
