@@ -24,6 +24,7 @@ export default function TodoStyle({
             flexDirection: "row",
             justifyContent: "space-between",
             padding: "5px",
+            marginButtom:"10px",
           }}
         >
           <Box sx={{width: "40px"}}>
