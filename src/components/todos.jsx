@@ -98,7 +98,9 @@ const TodoList = () => {
             })
           );
         } else {
-          dispatch(addTodo(dataToSubmit));
+          dispatch(addTodo(dataToSubmit)).then(() => {
+  dispatch(fetchTodos());
+});
         }
         setFormData({
           title: "",
