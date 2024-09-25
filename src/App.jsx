@@ -1,7 +1,7 @@
 import TodoList from "./components/todos";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "./config/fireBase";
 import {loginUser, logoutUser} from "./Features/userSlice";

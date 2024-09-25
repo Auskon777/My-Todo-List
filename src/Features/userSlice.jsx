@@ -49,7 +49,7 @@ export const loginUser = createAsyncThunk(
         uid: user.uid,
         email: user.email,
       };
-      console.log("User logged in:", userData);
+
       return userData;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -66,7 +66,7 @@ export const logoutUser = createAsyncThunk("user/logout", async () => {
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    user: null,
+    user: {uid: null, email: null},
     status: "idle",
     error: null,
   },
@@ -88,7 +88,9 @@ const userSlice = createSlice({
         state.status = "loading";
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        //  state.user = action.payload;
+        state.uid = action.payload.uid;
+        state.email = action.payload.email;
         state.status = "succeeded";
       })
       .addCase(loginUser.rejected, (state, action) => {

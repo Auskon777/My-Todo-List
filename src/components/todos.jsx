@@ -50,19 +50,14 @@ const TodoList = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        dispatch(loginUser({uid: user.uid, email: user.email}));
         if (status === "idle") {
           dispatch(fetchTodos(user.uid));
-          dispatch(
-            loginUser({
-              uid: user.uid,
-              email: user.email,
-            })
-          );
         }
       } else {
         // User is not logged in, redirect to the login page
-        navigate("/login");
         dispatch(logoutUser());
+        navigate("/login");
       }
     });
 
