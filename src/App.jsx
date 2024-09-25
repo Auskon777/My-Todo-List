@@ -12,9 +12,8 @@ import LandingPage from "./components/landingPage";
 
 function App() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
 
-  /*useEffect(() => {
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is logged in, you can dispatch an action to update Redux state
@@ -32,8 +31,8 @@ function App() {
 
     // Clean up subscription on unmount
     return () => unsubscribe();
-  }, [dispatch, user]);
-*/
+  }, [dispatch]);
+
   return (
     <div>
       <Router>

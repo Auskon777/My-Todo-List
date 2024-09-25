@@ -25,7 +25,7 @@ import {
 import TodoForm from "./todoForm";
 import ActiveTodoStyle from "./activeTodoStyle";
 import CompletedTodoStyle from "./completedTodoStyle";
-import Header from "./header";
+import Header from "./navBar";
 import {useNavigate} from "react-router-dom";
 
 const TodoList = () => {
@@ -52,10 +52,17 @@ const TodoList = () => {
       if (user) {
         if (status === "idle") {
           dispatch(fetchTodos(user.uid));
+          dispatch(
+            loginUser({
+              uid: user.uid,
+              email: user.email,
+            })
+          );
         }
       } else {
         // User is not logged in, redirect to the login page
         navigate("/login");
+        dispatch(logoutUser());
       }
     });
 

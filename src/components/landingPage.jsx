@@ -2,7 +2,7 @@ import {useNavigate} from "react-router-dom";
 import {Button, Box, Typography, Paper, CardMedia, Card} from "@mui/material";
 import todoIllustration from "../assets/todo-image.jfif";
 import {useMediaQuery} from "@mui/material";
-import Header from "./header";
+import Header from "./navBar";
 
 export default function LandingPage() {
   const navigate = useNavigate();
