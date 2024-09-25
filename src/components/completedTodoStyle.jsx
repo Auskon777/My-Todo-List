@@ -55,7 +55,7 @@ export default function CompletedStyles({
                 textDecorationColor: "#2c2c2c",
               }}
             >
-              <Typography variant="h6" color={"#d6dbdf"}>
+              <Typography variant="1.5rem" color={"#d6dbdf"}>
                 {todo.title}
               </Typography>
             </Box>

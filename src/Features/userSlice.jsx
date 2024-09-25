@@ -3,8 +3,6 @@ import {auth, db} from "../config/fireBase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  setPersistence,
-  browserLocalPersistence,
   signOut,
 } from "firebase/auth";
 import {doc, setDoc} from "firebase/firestore";
@@ -41,7 +39,6 @@ export const loginUser = createAsyncThunk(
   "user/login",
   async ({email, password}, {rejectWithValue}) => {
     try {
-      await setPersistence(auth, browserLocalPersistence);
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,

@@ -21,9 +21,6 @@ import {
   Button,
   Box,
   Typography,
-  Paper,
-  CardMedia,
-  Card,
 } from "@mui/material";
 import TodoForm from "./todoForm";
 import ActiveTodoStyle from "./activeTodoStyle";
@@ -53,37 +50,18 @@ const TodoList = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is logged in, you can dispatch an action to update Redux state
-        dispatch(
-          loginUser({
-            uid: user.uid,
-            email: user.email,
-          })
-        );
+        if (status === "idle") {
+          dispatch(fetchTodos(user.uid));
+        }
       } else {
-        // User is logged out, dispatch a logout action
-        dispatch(logoutUser());
+        // User is not logged in, redirect to the login page
+        navigate("/login");
       }
     });
 
     // Clean up subscription on unmount
     return () => unsubscribe();
-  }, [dispatch, user]);
-
-  useEffect(() => {
-    const fetch = () => {
-      if (status === "idle") {
-        dispatch(fetchTodos());
-      }
-    };
-    return () => fetch();
-  }, [status, dispatch]);
-
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
+  }, [dispatch, navigate, status]);
 
   const handleChange = (event) => {
     const {name, value} = event.target;
@@ -94,7 +72,6 @@ const TodoList = () => {
   };
 
   //handle submit fuction
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.title && formData.description && formData.date) {
@@ -164,167 +141,161 @@ const TodoList = () => {
 
   return (
     <div>
-      {user ? (
-        <div>
-          <Header />
-          <Box
+      <Header />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          backgroundColor: "#2c2c2c",
+          maxWidth: "700px",
+          padding: "20px 20px",
+          marginBottom: "100px",
+          marginTop: "150px",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <Box>
+          <Typography variant="h5" color={"#e64a19"}>
+            Create event
+          </Typography>
+        </Box>
+        <Box sx={{marginLeft: "0px"}}>
+          <TodoForm
+            formData={formData}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+          />
+        </Box>
+        <Box>
+          <Typography variant="h5" color={"#e64a19"}>
+            My events
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "start",
+            alignItems: "center",
+            margin: "20px 0px",
+            width: "fit-content",
+          }}
+        >
+          <Button
+            variant="contained"
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              backgroundColor: "#2c2c2c",
-              maxWidth: "700px",
-              padding: "20px 20px",
-              marginBottom: "100px",
-              marginTop: "150px",
-              marginLeft: "auto",
-              marginRight: "auto",
+              "&.MuiButton-root": {
+                marginRight: "5px",
+                color: "#e64a19",
+                backgroundColor: "#333333",
+                "&:hover": {
+                  backgroundColor: "#d84315",
+                  color: "#d6dbdf",
+                },
+              },
+            }}
+            onClick={() => {
+              isSetCompleted(false);
             }}
           >
-            <Box>
-              <Typography variant="h5" color={"#e64a19"}>
-                Create event
-              </Typography>
-            </Box>
-            <Box sx={{marginLeft: "0px"}}>
-              <TodoForm
-                formData={formData}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-              />
-            </Box>
-            <Box>
-              <Typography variant="h5" color={"#e64a19"}>
-                My events
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "start",
-                alignItems: "center",
-                margin: "20px 0px",
-                width: "fit-content",
-              }}
-            >
-              <Button
-                variant="contained"
-                sx={{
-                  "&.MuiButton-root": {
-                    marginRight: "5px",
-                    color: "#e64a19",
-                    backgroundColor: "#333333",
-                    "&:hover": {
-                      backgroundColor: "#d84315",
-                      color: "#d6dbdf",
-                    },
-                  },
-                }}
-                onClick={() => {
-                  isSetCompleted(false);
-                }}
-              >
-                Active
-              </Button>
+            Active
+          </Button>
 
-              <Button
-                variant="contained"
-                sx={{
-                  "&.MuiButton-root": {
-                    color: "#e64a19",
-                    //borderColor: "#e64a19",
-                    backgroundColor: "#333333",
-                    "&:hover": {
-                      backgroundColor: "#d84315",
-                      color: "#d6dbdf",
-                    },
-                  },
-                }}
-                onClick={() => {
-                  isSetCompleted(true);
-                }}
-              >
-                Completed
-              </Button>
-            </Box>
-            <Box
-              sx={{
-                margin: "5px",
-              }}
-            >
-              {isCompleted ? (
-                <Typography variant="h5" color={"#e64a19"}>
-                  Completed
-                </Typography>
-              ) : (
-                <Typography variant="h5" color={"#e64a19"}>
-                  Active
-                </Typography>
-              )}
-            </Box>
-            {isCompleted === false &&
-              todos.map((todo) => (
-                <ActiveTodoStyle
-                  key={todo.id}
-                  todo={todo}
-                  handleDeleteTodo={handleDeleteTodo}
-                  handleToggle={handleToggle}
-                  handleEdit={handleEdit}
-                />
-              ))}
-            <Box>
-              {isCompleted === true &&
-                completedTodos.map((todo) => (
-                  <CompletedTodoStyle
-                    key={todo.id}
-                    todo={todo}
-                    handleDeleteTodo={handleDeleteTodo}
-                    handleToggle={handleToggle}
-                  />
-                ))}
-            </Box>
-          </Box>
-
-          <Dialog
+          <Button
+            variant="contained"
             sx={{
-              "& .MuiPaper-root": {backgroundColor: "#2c2c2c", width: "100%"},
+              "&.MuiButton-root": {
+                color: "#e64a19",
+                //borderColor: "#e64a19",
+                backgroundColor: "#333333",
+                "&:hover": {
+                  backgroundColor: "#d84315",
+                  color: "#d6dbdf",
+                },
+              },
             }}
-            open={open}
-            onClose={handleClose}
+            onClick={() => {
+              isSetCompleted(true);
+            }}
           >
-            <DialogTitle>
-              <Typography color={"#d6dbdf"}>Edit Todo</Typography>
-            </DialogTitle>
-            <DialogContent>
-              <TodoForm
-                formData={formData}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
+            Completed
+          </Button>
+        </Box>
+        <Box
+          sx={{
+            margin: "5px",
+          }}
+        >
+          {isCompleted ? (
+            <Typography variant="h5" color={"#e64a19"}>
+              Completed
+            </Typography>
+          ) : (
+            <Typography variant="h5" color={"#e64a19"}>
+              Active
+            </Typography>
+          )}
+        </Box>
+        {isCompleted === false &&
+          todos.map((todo) => (
+            <ActiveTodoStyle
+              key={todo.id}
+              todo={todo}
+              handleDeleteTodo={handleDeleteTodo}
+              handleToggle={handleToggle}
+              handleEdit={handleEdit}
+            />
+          ))}
+        <Box>
+          {isCompleted === true &&
+            completedTodos.map((todo) => (
+              <CompletedTodoStyle
+                key={todo.id}
+                todo={todo}
+                handleDeleteTodo={handleDeleteTodo}
+                handleToggle={handleToggle}
               />
-            </DialogContent>
-            <DialogActions>
-              <Button
-                variant="contained"
-                sx={{
-                  "&.MuiButton-root": {
-                    color: "#e64a19",
-                    width: "6rem",
-                    backgroundColor: "#333333",
-                    "&:hover": {
-                      backgroundColor: "#d84315",
-                      color: "#d6dbdf",
-                    },
-                  },
-                }}
-                onClick={handleClose}
-              >
-                Cancel
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
-      ) : (
-        <div>Redirecting to login...</div>
-      )}
+            ))}
+        </Box>
+      </Box>
+
+      <Dialog
+        sx={{
+          "& .MuiPaper-root": {backgroundColor: "#2c2c2c", width: "100%"},
+        }}
+        open={open}
+        onClose={handleClose}
+      >
+        <DialogTitle>
+          <Typography color={"#d6dbdf"}>Edit Todo</Typography>
+        </DialogTitle>
+        <DialogContent>
+          <TodoForm
+            formData={formData}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="contained"
+            sx={{
+              "&.MuiButton-root": {
+                color: "#e64a19",
+                width: "6rem",
+                backgroundColor: "#333333",
+                "&:hover": {
+                  backgroundColor: "#d84315",
+                  color: "#d6dbdf",
+                },
+              },
+            }}
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

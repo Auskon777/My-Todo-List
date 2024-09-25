@@ -48,7 +48,7 @@ export default function TodoStyle({
           </Box>
           <Box sx={{display: "block", width: "100%"}}>
             <Box sx={{display: "flex", flexWrap: "wrap", overflow: "hidden"}}>
-              <Typography variant="h6" color={"#d6dbdf"}>
+              <Typography variant="1.5rem" color={"#d6dbdf"}>
                 {todo.title}
               </Typography>
             </Box>
