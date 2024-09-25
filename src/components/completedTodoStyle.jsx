@@ -21,7 +21,7 @@ export default function CompletedStyles({
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-
+            marginBottom:"10px",
             padding: "5px",
           }}
         >
