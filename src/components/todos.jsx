@@ -67,8 +67,8 @@ const TodoList = () => {
 
   const handleChange = (event) => {
     const {name, value} = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
+    setFormData((preData) => ({
+      ...preData,
       [name]: value,
     }));
   };
