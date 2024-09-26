@@ -98,7 +98,9 @@ const userSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(logoutUser.fulfilled, (state) => {
-        state.user = null;
+        //state.user = null;
+        state.uid = null;
+        state.email = null;
         state.status = "idle";
       });
   },
