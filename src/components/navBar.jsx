@@ -18,8 +18,8 @@ export default function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
-  const user = useSelector((state) => state.user.user); // Assuming user is stored in Redux
-
+  const {email} = useSelector((state) => state.user.user);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -89,9 +89,9 @@ export default function Header() {
           },
         }}
       >
-        {user ? (
+        {isAuthenticated ? (
           <Box>
-            <MenuItem disabled>{user.email}</MenuItem>
+            <MenuItem disabled>{email}</MenuItem>
             <MenuItem sx={{color: "#e64a19"}} onClick={handleLogout}>
               Logout
             </MenuItem>

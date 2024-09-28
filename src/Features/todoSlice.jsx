@@ -84,16 +84,37 @@ const todoSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchTodos.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(fetchTodos.rejected, (state) => {
+      state.error = "failed";
+    });
+
     builder.addCase(fetchTodos.fulfilled, (state, action) => {
       state.items =
         action.payload
           .filter((todo) => !todo.completed)
           .sort((a, b) => b.createdAt - a.createdAt) || [];
       state.completed = action.payload.filter((todo) => todo.completed) || [];
+      state.status = "succeeded";
     });
-
+    // ADD TODO
+    builder.addCase(addTodo.pending, (state) => {
+      state.status = "loading";
+    });
     builder.addCase(addTodo.fulfilled, (state, action) => {
       state.items.push(action.payload);
+      state.status = "succeeded";
+    });
+
+    builder.addCase(addTodo.rejected, (state) => {
+      state.error = "failed";
+    });
+
+    // update todo
+    builder.addCase(updateTodo.pending, (state) => {
+      state.status = "loading";
     });
     builder.addCase(updateTodo.fulfilled, (state, action) => {
       const index = state.items.findIndex(
@@ -102,14 +123,34 @@ const todoSlice = createSlice({
       if (index !== -1) {
         state.items[index] = action.payload;
       }
+      state.status = "succeeded";
     });
 
+    builder.addCase(updateTodo.rejected, (state) => {
+      state.error = "failed";
+    });
+
+    // delete todo
+    builder.addCase(deleteTodo.pending, (state) => {
+      state.status = "loading";
+    });
     builder.addCase(deleteTodo.fulfilled, (state, action) => {
       state.items = state.items.filter((todo) => todo.id !== action.payload);
       state.completed = state.completed.filter(
         (todo) => todo.id !== action.payload
       );
+      state.status = "succeeded";
     });
+
+    builder.addCase(deleteTodo.rejected, (state) => {
+      state.error = "failed";
+    });
+
+    //updating completed todos
+    builder.addCase(updateCompletedTodo.pending, (state) => {
+      state.status = "loading";
+    });
+
     builder.addCase(updateCompletedTodo.fulfilled, (state, action) => {
       const {id, completed} = action.payload;
       const todoIndex = state.items.findIndex((todo) => todo.id === id);
@@ -122,6 +163,11 @@ const todoSlice = createSlice({
           state.completed.push(todo); // Add to completed
         }
       }
+      state.status = "succeeded";
+    });
+
+    builder.addCase(updateCompletedTodo.rejected, (state) => {
+      state.error = "failed";
     });
   },
 });

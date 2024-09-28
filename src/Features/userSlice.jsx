@@ -48,6 +48,7 @@ export const loginUser = createAsyncThunk(
       const userData = {
         uid: user.uid,
         email: user.email,
+        isAuthenticated: true,
       };
 
       return userData;
@@ -67,10 +68,17 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     user: {uid: null, email: null},
+    isAuthenticated: false,
     status: "idle",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    login: (state, action) => {
+      state.user.uid = action.payload.uid;
+      state.user.email = action.payload.email;
+      state.isAuthenticated = action.payload.isAuthenticated; // Set isAuthenticated
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(signUpUser.pending, (state) => {
@@ -89,8 +97,9 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         //  state.user = action.payload;
-        state.uid = action.payload.uid;
-        state.email = action.payload.email;
+        state.user.uid = action.payload.uid;
+        state.user.email = action.payload.email;
+        state.isAuthenticated = action.payload.isAuthenticated;
         state.status = "succeeded";
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -98,10 +107,14 @@ const userSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(logoutUser.fulfilled, (state) => {
-        state.user = null;
+        state.user.uid = null;
+        state.user.email = null;
+        state.isAuthenticated = false;
         state.status = "idle";
+        console.log(state.isAuthenticated);
       });
   },
 });
 
+export const {login} = userSlice.actions;
 export default userSlice.reducer;

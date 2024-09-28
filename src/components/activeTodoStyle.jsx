@@ -23,7 +23,8 @@ export default function TodoStyle({
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-            padding: "5px",
+            padding: "10px 5px",
+            marginBottom: "20px",
           }}
         >
           <Box sx={{width: "40px"}}>
@@ -53,7 +54,7 @@ export default function TodoStyle({
               </Typography>
             </Box>
             <Box sx={{display: "flex", flexWrap: "wrap", overflow: "hidden"}}>
-              <Typography fontSize={"0.9rem"} color={"#aeb6bf"}>
+              <Typography fontSize={"0.8rem"} color={"#aeb6bf"}>
                 {todo.description}
               </Typography>
             </Box>
@@ -62,6 +63,7 @@ export default function TodoStyle({
               sx={{
                 marginLeft: "auto",
                 width: "fit-content",
+                //border: "1px solid #424949",
               }}
             >
               <Typography fontSize={"0.7rem"} color={"#aeb6bf"}>

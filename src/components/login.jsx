@@ -18,6 +18,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {status, error} = useSelector((state) => state.user);
+  //const {uid, email} = useSelector((state) => state.user.user);
 
   const handleLogin = (e) => {
     e.preventDefault();

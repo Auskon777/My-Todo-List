@@ -9,7 +9,7 @@ import {
   updateTodo,
   addTodo,
 } from "../Features/todoSlice";
-import {loginUser, logoutUser} from "../Features/userSlice";
+import {loginUser, login, logoutUser} from "../Features/userSlice";
 import {auth} from "../config/fireBase";
 import {onAuthStateChanged} from "firebase/auth";
 
@@ -34,6 +34,7 @@ const TodoList = () => {
   const status = useSelector((state) => state.todo.status);
   const completedTodos = useSelector((state) => state.todo.completed);
   const user = useSelector((state) => state.user.user);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -50,7 +51,9 @@ const TodoList = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch(loginUser({uid: user.uid, email: user.email}));
+        dispatch(
+          login({uid: user.uid, email: user.email, isAuthenticated: true})
+        );
         if (status === "idle") {
           dispatch(fetchTodos(user.uid));
         }
@@ -150,15 +153,15 @@ const TodoList = () => {
           flexDirection: "column",
           backgroundColor: "#2c2c2c",
           maxWidth: "700px",
-          padding: "20px 20px",
-          marginBottom: "100px",
-          marginTop: "150px",
+          padding: "20px 10px",
+          marginTop: "200px",
           marginLeft: "auto",
           marginRight: "auto",
+          position: "relative",
         }}
       >
-        <Box>
-          <Typography variant="h5" color={"#e64a19"}>
+        <Box sx={{position: "absolute", top: "-40px", left: "-0px"}}>
+          <Typography variant="h5" color={"#aeb6bf"}>
             Create event
           </Typography>
         </Box>
@@ -169,8 +172,23 @@ const TodoList = () => {
             handleSubmit={handleSubmit}
           />
         </Box>
-        <Box>
-          <Typography variant="h5" color={"#e64a19"}>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          backgroundColor: "#2c2c2c",
+          maxWidth: "700px",
+          padding: "20px 20px",
+          marginBottom: "100px",
+          marginTop: "100px",
+          marginLeft: "auto",
+          marginRight: "auto",
+          position: "relative",
+        }}
+      >
+        <Box sx={{position: "absolute", top: "-40px", left: "-0px"}}>
+          <Typography variant="h5" color={"#aeb6bf"}>
             My events
           </Typography>
         </Box>
@@ -181,17 +199,20 @@ const TodoList = () => {
             alignItems: "center",
             margin: "20px 0px",
             width: "fit-content",
+            backgroundColor: "#333333",
           }}
         >
           <Button
-            variant="contained"
+            variant={isCompleted === false ? "contained" : "outlined"}
             sx={{
               "&.MuiButton-root": {
-                marginRight: "5px",
                 color: "#e64a19",
                 backgroundColor: "#333333",
+                borderColor: "#333333",
+                borderBottom:
+                  isCompleted === false ? "1px solid #e64a19" : "#333333",
+
                 "&:hover": {
-                  backgroundColor: "#d84315",
                   color: "#d6dbdf",
                 },
               },
@@ -204,14 +225,17 @@ const TodoList = () => {
           </Button>
 
           <Button
-            variant="contained"
+            variant={isCompleted === true ? "contained" : "outlined"}
             sx={{
               "&.MuiButton-root": {
-                color: "#e64a19",
-                //borderColor: "#e64a19",
                 backgroundColor: "#333333",
+                color: "#e64a19",
+                borderColor: "#333333",
+                borderBottom:
+                  isCompleted === true ? "1px solid #e64a19" : "#333333",
+
                 "&:hover": {
-                  backgroundColor: "#d84315",
+                  // backgroundColor: "#d84315",
                   color: "#d6dbdf",
                 },
               },

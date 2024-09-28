@@ -178,9 +178,7 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            marginBottom: "20px",
-            paddingBottom: "40px",
-            borderBottom: "1px solid #424949",
+            paddingBottom: "10px",
           }}
           noValidate
           autoComplete="off"

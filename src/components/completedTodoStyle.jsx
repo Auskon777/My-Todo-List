@@ -21,8 +21,8 @@ export default function CompletedStyles({
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-
-            padding: "5px",
+            padding: "10px 5px",
+            marginBottom: "20px",
           }}
         >
           <Box sx={{width: "40px"}}>
@@ -68,7 +68,7 @@ export default function CompletedStyles({
                 textDecorationColor: "#2c2c2c",
               }}
             >
-              <Typography fontSize={"0.9rem"} color={"#aeb6bf"}>
+              <Typography fontSize={"0.8rem"} color={"#aeb6bf"}>
                 {todo.description}
               </Typography>
             </Box>
