@@ -75,7 +75,6 @@ export default function CompletedStyles({
 
             <Box
               sx={{
-                marginLeft: "auto",
                 width: "fit-content",
               }}
             >

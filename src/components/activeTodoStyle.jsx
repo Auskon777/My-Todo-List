@@ -61,9 +61,7 @@ export default function TodoStyle({
 
             <Box
               sx={{
-                marginLeft: "auto",
                 width: "fit-content",
-                //border: "1px solid #424949",
               }}
             >
               <Typography fontSize={"0.7rem"} color={"#aeb6bf"}>

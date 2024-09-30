@@ -174,7 +174,7 @@ const Login = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              marginTop: "10px",
+              marginTop: "25px",
             }}
           >
             <Box>

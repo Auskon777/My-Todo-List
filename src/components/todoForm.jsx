@@ -24,14 +24,13 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
           component="form"
           onSubmit={handleSubmit}
           sx={{
-            "& .MuiTextField-root": {m: 1, width: "100%"},
+            "& .MuiTextField-root": {m: 1, width: "90%"},
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
             marginBottom: "20px",
-            paddingBottom: "30px",
-            borderBottom: "1px solid #424949",
+            paddingBottom: "10px",
           }}
           noValidate
           autoComplete="off"
@@ -62,7 +61,7 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
             }}
           />
           <TextField
-            label="Description"
+            label="Add note"
             name="description"
             variant="outlined"
             required
@@ -209,7 +208,7 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
             }}
           />
           <TextField
-            label="Description"
+            label="Add note"
             name="description"
             variant="outlined"
             required
