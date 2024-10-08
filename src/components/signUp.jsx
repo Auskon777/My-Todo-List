@@ -85,13 +85,13 @@ const SignUp = () => {
               width: "100%",
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949",
                 },
                 "&:hover fieldset": {
                   borderColor: "#e64a19",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949",
                 },
               },
             }}
@@ -110,13 +110,13 @@ const SignUp = () => {
               width: "100%",
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949",
                 },
                 "&:hover fieldset": {
                   borderColor: "#e64a19",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949",
                 },
               },
             }}

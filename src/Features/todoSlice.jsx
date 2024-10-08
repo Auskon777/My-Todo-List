@@ -12,12 +12,13 @@ import {
 } from "firebase/firestore";
 
 // Async thunk to fetch todos
-export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
-  const user = auth.currentUser;
+export const fetchTodos = createAsyncThunk(
+  "todos/fetchTodos",
+  async (userId) => {
+    try {
+      if (!userId) throw new Error("User ID is undefined");
 
-  try {
-    if (user) {
-      const q = query(collection(db, "todo"), where("userId", "==", user.uid));
+      const q = query(collection(db, "todo"), where("userId", "==", userId));
       const querySnapshot = await getDocs(q);
       const todos = querySnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -25,13 +26,11 @@ export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
       }));
 
       return todos;
-    } else {
-      throw new Error("user not logged in");
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
   }
-});
+);
 
 // Async thunk to add a new todo
 export const addTodo = createAsyncThunk("todos/addTodo", async (todo) => {
@@ -42,7 +41,6 @@ export const addTodo = createAsyncThunk("todos/addTodo", async (todo) => {
 //  Async thunk to update todo
 export const updateTodo = createAsyncThunk("todos/editTodo", async (todo) => {
   const {id, ...data} = todo;
-  // const dateString = date.toString();
   await updateDoc(doc(db, "todo", id), data);
 
   return todo;
@@ -82,15 +80,15 @@ const todoSlice = createSlice({
         state.completed.push(completedTodo); // Add the todo to the completed array
       }
     },
+    clearTodos: (state) => {
+      state.todos = [];
+      state.status = "idle";
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchTodos.pending, (state) => {
       state.status = "loading";
     });
-    builder.addCase(fetchTodos.rejected, (state) => {
-      state.error = "failed";
-    });
-
     builder.addCase(fetchTodos.fulfilled, (state, action) => {
       state.items =
         action.payload
@@ -99,6 +97,10 @@ const todoSlice = createSlice({
       state.completed = action.payload.filter((todo) => todo.completed) || [];
       state.status = "succeeded";
     });
+    builder.addCase(fetchTodos.rejected, (state) => {
+      state.error = "failed";
+    });
+
     // ADD TODO
     builder.addCase(addTodo.pending, (state) => {
       state.status = "loading";
@@ -171,5 +173,5 @@ const todoSlice = createSlice({
     });
   },
 });
-export const {toggleTodo} = todoSlice.actions;
+export const {toggleTodo, clearTodos} = todoSlice.actions;
 export default todoSlice.reducer;

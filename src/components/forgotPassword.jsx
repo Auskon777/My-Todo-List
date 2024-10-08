@@ -14,17 +14,22 @@ export default function ForgotPassword() {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
+    setError("");
     try {
       await sendPasswordResetEmail(auth, email);
       setEmailSent(true);
       setEmail("");
     } catch (error) {
-      if (error.code == "auth/user-not-found") {
-        setError("No account associated with this email");
-      } else if (error.code == "auth/invalid-email") {
-        setError("invalid email address");
-      } else {
-        setError(error.message);
+      console.error("Error sending reset email:", error);
+      switch (error.code) {
+        case "auth/user-not-found":
+          setError("No account associated with this email.");
+          break;
+        case "auth/invalid-email":
+          setError("Invalid email address.");
+          break;
+        default:
+          setError("An error occurred. Please try again later.");
       }
     }
   };
@@ -202,13 +207,13 @@ export default function ForgotPassword() {
                 width: "100%",
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
-                    borderColor: "#aeb6bf",
+                    borderColor: "#424949",
                   },
                   "&:hover fieldset": {
                     borderColor: "#e64a19",
                   },
                   "&.Mui-focused fieldset": {
-                    borderColor: "#aeb6bf",
+                    borderColor: "#424949",
                   },
                 },
               }}

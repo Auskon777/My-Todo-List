@@ -18,17 +18,16 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {status, error} = useSelector((state) => state.user);
-  //const {uid, email} = useSelector((state) => state.user.user);
+  //const {uid} = useSelector((state) => state.user.user);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch(loginUser({email, password})).then((result) => {
-      if (result.meta.requestStatus === "fulfilled") {
-        navigate("/home");
-        setEmail("");
-        setPassword("");
-      }
-    });
+    const result = await dispatch(loginUser({email, password}));
+    if (loginUser.fulfilled.match(result)) {
+      navigate("/home");
+      setEmail("");
+      setPassword("");
+    }
   };
 
   return (
@@ -88,13 +87,13 @@ const Login = () => {
               width: "100%",
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949",
                 },
                 "&:hover fieldset": {
                   borderColor: "#e64a19",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949",
                 },
               },
             }}
@@ -113,13 +112,13 @@ const Login = () => {
               width: "100%",
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949f",
                 },
                 "&:hover fieldset": {
                   borderColor: "#e64a19",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949",
                 },
               },
             }}

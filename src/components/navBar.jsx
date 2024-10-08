@@ -8,11 +8,12 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import {logoutUser} from "../Features/userSlice";
+import {logout} from "../Features/userSlice";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import {useState} from "react";
+import {clearTodos} from "../Features/todoSlice";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -29,7 +30,8 @@ export default function Header() {
   };
 
   const handleLogout = () => {
-    dispatch(logoutUser());
+    dispatch(logout());
+    dispatch(clearTodos());
     navigate("/login"); // Redirect to login page
   };
 

@@ -29,8 +29,8 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            marginBottom: "20px",
-            paddingBottom: "10px",
+            marginBottom: "10px",
+            paddingBottom: "0px",
           }}
           noValidate
           autoComplete="off"
@@ -49,13 +49,13 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
               input: {color: "#aeb6bf"},
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949",
                 },
                 "&:hover fieldset": {
                   borderColor: "#e64a19",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949",
                 },
               },
             }}
@@ -75,13 +75,13 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
               input: {color: "#aeb6bf"},
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949",
                 },
                 "&:hover fieldset": {
                   borderColor: "#e64a19",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949",
                 },
               },
             }}
@@ -132,13 +132,13 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
                       input: {color: "#aeb6bf"},
                       "& .MuiOutlinedInput-root": {
                         "& fieldset": {
-                          borderColor: "#aeb6bf",
+                          borderColor: "#424949",
                         },
                         "&:hover fieldset": {
                           borderColor: "#e64a19",
                         },
                         "&.Mui-focused fieldset": {
-                          borderColor: "#aeb6bf",
+                          borderColor: "#424949",
                         },
                         "& .MuiSvgIcon-root": {
                           color: "#e64a19",
@@ -155,7 +155,7 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
             type="submit"
             sx={{
               width: "10rem",
-              marginTop: "20px",
+              marginTop: "30px",
               backgroundColor: "#333333",
               border: "1px solid #e64a19 ",
               color: "#e64a19",
@@ -165,7 +165,7 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
               },
             }}
           >
-            <Typography>Add </Typography> <SendIcon />
+            <Typography>create </Typography> <SendIcon />
           </Button>
         </Box>
       ) : (
@@ -196,13 +196,13 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
               input: {color: "#aeb6bf"},
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949",
                 },
                 "&:hover fieldset": {
                   borderColor: "#e64a19",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949",
                 },
               },
             }}
@@ -222,13 +222,13 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
               input: {color: "#aeb6bf"},
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949",
                 },
                 "&:hover fieldset": {
                   borderColor: "#e64a19",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "#aeb6bf",
+                  borderColor: "#424949",
                 },
               },
             }}
@@ -279,13 +279,13 @@ const TodoForm = ({handleSubmit, handleChange, formData}) => {
                       input: {color: "#aeb6bf"},
                       "& .MuiOutlinedInput-root": {
                         "& fieldset": {
-                          borderColor: "#aeb6bf",
+                          borderColor: "#424949",
                         },
                         "&:hover fieldset": {
                           borderColor: "#e64a19",
                         },
                         "&.Mui-focused fieldset": {
-                          borderColor: "#aeb6bf",
+                          borderColor: "#424949",
                         },
                         "& .MuiSvgIcon-root": {
                           color: "#e64a19",

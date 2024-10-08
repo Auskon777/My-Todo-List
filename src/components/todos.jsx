@@ -8,8 +8,9 @@ import {
   updateCompletedTodo,
   updateTodo,
   addTodo,
+  clearTodos,
 } from "../Features/todoSlice";
-import {loginUser, login, logoutUser} from "../Features/userSlice";
+import {login, logout} from "../Features/userSlice";
 import {auth} from "../config/fireBase";
 import {onAuthStateChanged} from "firebase/auth";
 
@@ -21,6 +22,8 @@ import {
   Button,
   Box,
   Typography,
+  useMediaQuery,
+  Paper,
 } from "@mui/material";
 import TodoForm from "./todoForm";
 import ActiveTodoStyle from "./activeTodoStyle";
@@ -33,8 +36,6 @@ const TodoList = () => {
   const todos = useSelector((state) => state.todo.items);
   const status = useSelector((state) => state.todo.status);
   const completedTodos = useSelector((state) => state.todo.completed);
-  const user = useSelector((state) => state.user.user);
-  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -47,19 +48,21 @@ const TodoList = () => {
     description: "",
     date: null,
   });
-
+  const isMobile = useMediaQuery("(max-width:600px)");
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(
           login({uid: user.uid, email: user.email, isAuthenticated: true})
         );
+        // Only fetch todos if the status is 'idle' to avoid re-fetching
         if (status === "idle") {
           dispatch(fetchTodos(user.uid));
         }
       } else {
         // User is not logged in, redirect to the login page
-        dispatch(logoutUser());
+        dispatch(clearTodos());
+        dispatch(logout());
         navigate("/login");
       }
     });
@@ -102,8 +105,8 @@ const TodoList = () => {
           );
         } else {
           dispatch(addTodo(dataToSubmit)).then(() => {
-  dispatch(fetchTodos());
-});
+            dispatch(fetchTodos());
+          });
         }
         setFormData({
           title: "",
@@ -149,7 +152,8 @@ const TodoList = () => {
   return (
     <div>
       <Header />
-      <Box
+      <Paper
+        elevation={8}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -157,8 +161,8 @@ const TodoList = () => {
           maxWidth: "700px",
           padding: "20px 10px",
           marginTop: "200px",
-          marginLeft: "auto",
-          marginRight: "auto",
+          marginLeft: isMobile ? "15px" : "auto",
+          marginRight: isMobile ? "15px" : "auto",
           position: "relative",
         }}
       >
@@ -174,18 +178,19 @@ const TodoList = () => {
             handleSubmit={handleSubmit}
           />
         </Box>
-      </Box>
-      <Box
+      </Paper>
+      <Paper
+        elevation={8}
         sx={{
           display: "flex",
           flexDirection: "column",
           backgroundColor: "#2c2c2c",
           maxWidth: "700px",
-          padding: "20px 20px",
+          padding: isMobile ? "20px 10px" : "20px 20px",
           marginBottom: "100px",
           marginTop: "100px",
-          marginLeft: "auto",
-          marginRight: "auto",
+          marginLeft: isMobile ? "15px" : "auto",
+          marginRight: isMobile ? "15px" : "auto",
           position: "relative",
         }}
       >
@@ -285,7 +290,7 @@ const TodoList = () => {
               />
             ))}
         </Box>
-      </Box>
+      </Paper>
 
       <Dialog
         sx={{
