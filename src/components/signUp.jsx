@@ -8,18 +8,23 @@ import {
   Paper,
   Typography,
   CircularProgress,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import {useMediaQuery} from "@mui/material";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const {status, error} = useSelector((state) => state.user);
+  const [showPassword, setShowPassword] = useState(false);
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -31,7 +36,9 @@ const SignUp = () => {
       }
     });
   };
-
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <div>
       <h2 style={{textAlign: "center", color: "#d6dbdf"}}>Sign Up</h2>
@@ -61,7 +68,7 @@ const SignUp = () => {
         sx={{
           "&.MuiPaper-root": {backgroundColor: "#2c2c2c"},
           maxWidth: "500px",
-          margin: "40px auto 0px auto",
+          margin: isMobile ? "40px 20px 0px 20px" : "40px auto 0px auto",
           padding: "10px",
         }}
       >
@@ -121,10 +128,24 @@ const SignUp = () => {
               },
             }}
             label="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    sx={{color: "#d6dbdf"}}
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <Box sx={{marginTop: "20px"}}>
             <Button

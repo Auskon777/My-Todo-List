@@ -8,17 +8,22 @@ import {
   Box,
   Paper,
   CircularProgress,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import {useMediaQuery} from "@mui/material";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {status, error} = useSelector((state) => state.user);
-  //const {uid} = useSelector((state) => state.user.user);
+  const [showPassword, setShowPassword] = useState(false);
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -28,6 +33,9 @@ const Login = () => {
       setEmail("");
       setPassword("");
     }
+  };
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -55,11 +63,11 @@ const Login = () => {
         />
       </Box>
       <Paper
-        elevation={10}
+        elevation={8}
         sx={{
           "&.MuiPaper-root": {backgroundColor: "#2c2c2c"},
           maxWidth: "500px",
-          margin: "40px auto 0px auto",
+          margin: isMobile ? "40px 20px 0px 20px" : "40px auto 0px auto",
           padding: "10px",
         }}
       >
@@ -100,9 +108,23 @@ const Login = () => {
           />
           <TextField
             label="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             required
             value={password}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    sx={{color: "#d6dbdf"}}
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
             onChange={(e) => setPassword(e.target.value)}
             InputLabelProps={{
               style: {color: "#aeb6bf"},

@@ -1,5 +1,7 @@
 import dayjs from "dayjs";
 import "dayjs/locale/en";
+import {ToastContainer, toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {
@@ -82,52 +84,74 @@ const TodoList = () => {
   //handle submit fuction
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.title && formData.description && formData.date) {
-      // Convert date to dayjs locale method
-      const dateString = dayjs(formData.date).format("ll");
-      const time = Date.now();
-      // checking if user is login
-      const user = auth.currentUser;
-      if (user) {
-        const dataToSubmit = {
-          ...formData,
-          date: dateString, // Replace the date with the string representation
-          completed: formData.completed || false,
-          userId: user.uid,
-          createdAt: time,
-        };
+
+    // checking if user is login
+    const user = auth.currentUser;
+    // Convert date to dayjs locale method
+    const dateString = dayjs(formData.date).format("ll");
+    const time = Date.now();
+
+    const dataToSubmit = {
+      ...formData,
+      date: dateString, // Replace the date with the string representation
+      completed: formData.completed || false,
+      userId: user.uid,
+      createdAt: time,
+    };
+
+    if (user) {
+      if (formData.title && formData.description && formData.date) {
         if (editTodo) {
           dispatch(
             updateTodo({
               id: editTodo.id,
               ...dataToSubmit,
             })
-          );
+          ).then(() => {
+            toast.success("Event updated successfully!", {
+              position: "top-right",
+              autoClose: 3000,
+            });
+          });
+          setOpen(false);
         } else {
           dispatch(addTodo(dataToSubmit)).then(() => {
-            dispatch(fetchTodos());
+            dispatch(fetchTodos(user.uid));
+            toast.success("Event created successfully!", {
+              position: "top-right",
+              autoClose: 3000,
+            });
           });
         }
-        setFormData({
-          title: "",
-          description: "",
-          date: null,
-        });
-        setOpen(false);
-      } else {
-        console.error("user not logged in");
       }
+      setFormData({
+        title: "",
+        description: "",
+        date: null,
+      });
+    } else {
+      console.log("user not logged in");
     }
   };
   // handle delete function
   const handleDeleteTodo = (todo) => {
-    dispatch(deleteTodo(todo));
+    dispatch(deleteTodo(todo)).then(() => {
+      toast.success("Event deleted successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    });
   };
 
   const handleToggle = (id, completed) => {
     if (completed) {
       // Update Firebase with the new completed status
-      dispatch(updateCompletedTodo({id, completed}));
+      dispatch(updateCompletedTodo({id, completed})).then(() => {
+        toast.success("Event marked as completed!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      });
     }
   };
 
@@ -152,6 +176,7 @@ const TodoList = () => {
   return (
     <div>
       <Header />
+      <ToastContainer style={{zIndex: 9999}} />
       <Paper
         elevation={8}
         sx={{
@@ -167,7 +192,7 @@ const TodoList = () => {
         }}
       >
         <Box sx={{position: "absolute", top: "-40px", left: "-0px"}}>
-          <Typography variant="h5" color={"#aeb6bf"}>
+          <Typography variant="h5" color={"#d6dbdf"}>
             Create event
           </Typography>
         </Box>
@@ -195,10 +220,11 @@ const TodoList = () => {
         }}
       >
         <Box sx={{position: "absolute", top: "-40px", left: "-0px"}}>
-          <Typography variant="h5" color={"#aeb6bf"}>
+          <Typography variant="h5" color={"#d6dbdf"}>
             My events
           </Typography>
         </Box>
+
         <Box
           sx={{
             display: "flex",
