@@ -26,12 +26,14 @@ import {
   Typography,
   useMediaQuery,
   Paper,
+  Skeleton,
 } from "@mui/material";
-import TodoForm from "./todoForm";
-import ActiveTodoStyle from "./activeTodoStyle";
-import CompletedTodoStyle from "./completedTodoStyle";
-import Header from "./navBar";
+import TodoForm from "../components/todoForm";
+import ActiveTodoStyle from "../components/activeTodoStyle";
+import CompletedTodoStyle from "../components/completedTodoStyle";
+import Header from "../components/navBar";
 import {useNavigate} from "react-router-dom";
+import LoadingSkeleton from "../components/loadingSkeleton";
 
 const TodoList = () => {
   dayjs.locale("en");
@@ -224,7 +226,6 @@ const TodoList = () => {
             My events
           </Typography>
         </Box>
-
         <Box
           sx={{
             display: "flex",
@@ -295,29 +296,38 @@ const TodoList = () => {
             </Typography>
           )}
         </Box>
-        {isCompleted === false &&
-          todos.map((todo) => (
-            <ActiveTodoStyle
-              key={todo.id}
-              todo={todo}
-              handleDeleteTodo={handleDeleteTodo}
-              handleToggle={handleToggle}
-              handleEdit={handleEdit}
-            />
-          ))}
         <Box>
-          {isCompleted === true &&
-            completedTodos.map((todo) => (
-              <CompletedTodoStyle
-                key={todo.id}
-                todo={todo}
-                handleDeleteTodo={handleDeleteTodo}
-                handleToggle={handleToggle}
-              />
-            ))}
-        </Box>
+          {status === "loading" ? (
+            <Box>
+              <LoadingSkeleton />
+              <LoadingSkeleton />
+            </Box>
+          ) : (
+            <Box>
+              {" "}
+              {isCompleted === false &&
+                todos.map((todo) => (
+                  <ActiveTodoStyle
+                    key={todo.id}
+                    todo={todo}
+                    handleDeleteTodo={handleDeleteTodo}
+                    handleToggle={handleToggle}
+                    handleEdit={handleEdit}
+                  />
+                ))}
+              {isCompleted === true &&
+                completedTodos.map((todo) => (
+                  <CompletedTodoStyle
+                    key={todo.id}
+                    todo={todo}
+                    handleDeleteTodo={handleDeleteTodo}
+                    handleToggle={handleToggle}
+                  />
+                ))}
+            </Box>
+          )}
+        </Box>{" "}
       </Paper>
-
       <Dialog
         sx={{
           "& .MuiPaper-root": {backgroundColor: "#2c2c2c", width: "100%"},

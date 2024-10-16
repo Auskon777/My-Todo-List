@@ -1,12 +1,23 @@
 import {useNavigate} from "react-router-dom";
-import {Button, Box, Typography, Paper, CardMedia, Card} from "@mui/material";
+import {
+  Button,
+  Box,
+  Typography,
+  Paper,
+  CardMedia,
+  Card,
+  Skeleton,
+} from "@mui/material";
+//import Skeleton from "@mui/material/Skeleton";
 import todoIllustration from "../assets/todo-image.jfif";
 import {useMediaQuery} from "@mui/material";
-import Header from "./navBar";
+import {useState} from "react";
+import Header from "../components/navBar";
 
 export default function LandingPage() {
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width:600px)");
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <div>
@@ -38,13 +49,25 @@ export default function LandingPage() {
 
               <Box sx={{display: "flex", width: "100%"}}>
                 <Card>
+                  {isLoading && (
+                    <Skeleton
+                      variant="rectangular"
+                      animation="wave"
+                      width={"100%"}
+                      height={"auto"}
+                    />
+                  )}
                   <CardMedia
                     component="img"
                     sx={{
                       width: "100%",
                       height: "auto",
+                      display: isLoading ? "none" : "block",
                     }}
                     image={todoIllustration}
+                    onLoad={() => {
+                      setIsLoading(false);
+                    }}
                   />
                 </Card>
               </Box>
@@ -185,14 +208,27 @@ export default function LandingPage() {
               </Box>
               <Box sx={{marginRight: "50px"}}>
                 <Card>
+                  {isLoading && (
+                    <Skeleton
+                      variant="rectangular"
+                      animation="wave"
+                      width="500px"
+                      minHeight="350px"
+                      maxHeight="450px"
+                    />
+                  )}
                   <CardMedia
                     component="img"
                     sx={{
                       width: "500px",
                       minHeight: "350px",
                       maxHeight: "450px",
+                      display: isLoading ? "none" : "block",
                     }}
                     image={todoIllustration}
+                    onLoad={() => {
+                      setIsLoading(false);
+                    }}
                   />
                 </Card>
               </Box>

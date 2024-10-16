@@ -1,9 +1,9 @@
-import TodoList from "./components/todos";
+import TodoList from "./pages/todos";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import SignUp from "./components/signUp";
-import Login from "./components/login";
-import ForgotPassword from "./components/forgotPassword";
-import LandingPage from "./components/landingPage";
+import SignUp from "./pages/signUp";
+import Login from "./pages/login";
+import ForgotPassword from "./pages/forgotPassword";
+import LandingPage from "./pages/landingPage";
 import Footer from "./components/footer";
 
 function App() {
