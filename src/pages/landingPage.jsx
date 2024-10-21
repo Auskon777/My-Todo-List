@@ -54,7 +54,7 @@ export default function LandingPage() {
                       variant="rectangular"
                       animation="wave"
                       width={"100%"}
-                      height={"auto"}
+                      height={"50px"}
                     />
                   )}
                   <CardMedia
@@ -213,16 +213,16 @@ export default function LandingPage() {
                       variant="rectangular"
                       animation="wave"
                       width="500px"
-                      minHeight="350px"
-                      maxHeight="450px"
+                      minheight="350px"
+                      maxheight="450px"
                     />
                   )}
                   <CardMedia
                     component="img"
                     sx={{
                       width: "500px",
-                      minHeight: "350px",
-                      maxHeight: "450px",
+                      minheight: "350px",
+                      maxheight: "450px",
                       display: isLoading ? "none" : "block",
                     }}
                     image={todoIllustration}

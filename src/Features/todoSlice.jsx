@@ -102,9 +102,6 @@ const todoSlice = createSlice({
     });
 
     // ADD TODO
-    builder.addCase(addTodo.pending, (state) => {
-      state.status = "loading";
-    });
     builder.addCase(addTodo.fulfilled, (state, action) => {
       state.items.push(action.payload);
       state.status = "succeeded";
@@ -115,9 +112,6 @@ const todoSlice = createSlice({
     });
 
     // update todo
-    builder.addCase(updateTodo.pending, (state) => {
-      state.status = "loading";
-    });
     builder.addCase(updateTodo.fulfilled, (state, action) => {
       const index = state.items.findIndex(
         (todo) => todo.id === action.payload.id
@@ -133,9 +127,6 @@ const todoSlice = createSlice({
     });
 
     // delete todo
-    builder.addCase(deleteTodo.pending, (state) => {
-      state.status = "loading";
-    });
     builder.addCase(deleteTodo.fulfilled, (state, action) => {
       state.items = state.items.filter((todo) => todo.id !== action.payload);
       state.completed = state.completed.filter(
@@ -149,9 +140,6 @@ const todoSlice = createSlice({
     });
 
     //updating completed todos
-    builder.addCase(updateCompletedTodo.pending, (state) => {
-      state.status = "loading";
-    });
 
     builder.addCase(updateCompletedTodo.fulfilled, (state, action) => {
       const {id, completed} = action.payload;
