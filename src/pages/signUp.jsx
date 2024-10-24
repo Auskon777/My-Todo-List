@@ -1,6 +1,9 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {signUpUser} from "../Features/userSlice";
+import {ToastContainer, toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   TextField,
   Button,
@@ -22,7 +25,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {status, error} = useSelector((state) => state.user);
+  const {status} = useSelector((state) => state.user);
   const [showPassword, setShowPassword] = useState(false);
   const isMobile = useMediaQuery("(max-width:600px)");
 
@@ -33,6 +36,12 @@ const SignUp = () => {
         setEmail("");
         setPassword("");
         navigate("/login");
+      } else if (result.meta.requestStatus === "rejected") {
+        // Show error toast
+        toast.error(result.payload || "Sign up failed. Please try again.", {
+          position: "top-right",
+          autoClose: 3000,
+        });
       }
     });
   };
@@ -171,8 +180,7 @@ const SignUp = () => {
               )}
             </Button>
           </Box>
-          {status === "failed" && <p>{error}</p>}
-
+          <ToastContainer />
           <Box
             sx={{
               display: "flex",

@@ -1,6 +1,8 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {loginUser} from "../Features/userSlice";
+import {ToastContainer, toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   TextField,
   Typography,
@@ -27,11 +29,18 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     const result = await dispatch(loginUser({email, password}));
     if (loginUser.fulfilled.match(result)) {
       navigate("/home");
       setEmail("");
       setPassword("");
+    }
+    if (loginUser.rejected.match(result)) {
+      toast.error(result.payload || "Login failed. Please try again.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     }
   };
   const handleClickShowPassword = () => {
@@ -188,8 +197,8 @@ const Login = () => {
               )}
             </Button>
           </Box>
-          {status === "failed" && <p>{error}</p>}
-
+          {/*{status === "failed" && <p>{error}</p>} */}
+          <ToastContainer />
           <Box
             sx={{
               display: "flex",
