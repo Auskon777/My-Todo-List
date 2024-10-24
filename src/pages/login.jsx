@@ -134,7 +134,7 @@ const Login = () => {
               width: "100%",
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "#424949f",
+                  borderColor: "#424949",
                 },
                 "&:hover fieldset": {
                   borderColor: "#e64a19",

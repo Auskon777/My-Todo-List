@@ -26,7 +26,6 @@ import {
   Typography,
   useMediaQuery,
   Paper,
-  Skeleton,
 } from "@mui/material";
 import TodoForm from "../components/todoForm";
 import ActiveTodoStyle from "../components/activeTodoStyle";
@@ -38,7 +37,7 @@ import LoadingSkeleton from "../components/loadingSkeleton";
 const TodoList = () => {
   dayjs.locale("en");
   const todos = useSelector((state) => state.todo.items);
-  const status = useSelector((state) => state.todo.status);
+  const {status, initialLoading} = useSelector((state) => state.todo);
   const completedTodos = useSelector((state) => state.todo.completed);
 
   const dispatch = useDispatch();
@@ -223,7 +222,7 @@ const TodoList = () => {
       >
         <Box sx={{position: "absolute", top: "-40px", left: "-0px"}}>
           <Typography variant="h5" color={"#d6dbdf"}>
-            My events
+            Events
           </Typography>
         </Box>
         <Box
@@ -297,14 +296,26 @@ const TodoList = () => {
           )}
         </Box>
         <Box>
-          {status === "loading" ? (
+          {initialLoading && status === "loading" ? (
             <Box>
               <LoadingSkeleton />
               <LoadingSkeleton />
             </Box>
+          ) : todos.length === 0 ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100px",
+              }}
+            >
+              <Typography variant="h5" color="#d6dbdf">
+                You have no events
+              </Typography>
+            </Box>
           ) : (
             <Box>
-              {" "}
               {isCompleted === false &&
                 todos.map((todo) => (
                   <ActiveTodoStyle
@@ -315,7 +326,22 @@ const TodoList = () => {
                     handleEdit={handleEdit}
                   />
                 ))}
-              {isCompleted === true &&
+
+              {(completedTodos.length === 0) & (isCompleted === true) ? (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100px",
+                  }}
+                >
+                  <Typography variant="h5" color="#d6dbdf">
+                    You have no completed events
+                  </Typography>
+                </Box>
+              ) : (
+                isCompleted === true &&
                 completedTodos.map((todo) => (
                   <CompletedTodoStyle
                     key={todo.id}
@@ -323,10 +349,23 @@ const TodoList = () => {
                     handleDeleteTodo={handleDeleteTodo}
                     handleToggle={handleToggle}
                   />
-                ))}
+                ))
+              )}
+              {status === "failed" && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100px",
+                  }}
+                >
+                  <Typography color="error">Failed to load todos.</Typography>
+                </Box>
+              )}
             </Box>
           )}
-        </Box>{" "}
+        </Box>
       </Paper>
       <Dialog
         sx={{

@@ -1,15 +1,7 @@
 import {motion} from "framer-motion";
-import {
-  Box,
-  IconButton,
-  Checkbox,
-  Typography,
-  Paper,
-  Skeleton,
-} from "@mui/material";
+import {Box, IconButton, Checkbox, Typography, Paper} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import {useSelector} from "react-redux";
 
 export default function TodoStyle({
   todo,

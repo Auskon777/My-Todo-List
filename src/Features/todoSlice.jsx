@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import {db, auth} from "../config/fireBase";
+import {db} from "../config/fireBase";
 import {
   collection,
   updateDoc,
@@ -67,6 +67,7 @@ const todoSlice = createSlice({
     items: [],
     completed: [],
     status: "idle",
+    initialLoading: true,
     error: null,
   },
   reducers: {
@@ -87,7 +88,9 @@ const todoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchTodos.pending, (state) => {
-      state.status = "loading";
+      if (state.initialLoading) {
+        state.status = "loading";
+      }
     });
     builder.addCase(fetchTodos.fulfilled, (state, action) => {
       state.items =
@@ -96,9 +99,11 @@ const todoSlice = createSlice({
           .sort((a, b) => b.createdAt - a.createdAt) || [];
       state.completed = action.payload.filter((todo) => todo.completed) || [];
       state.status = "succeeded";
+      state.initialLoading = false;
     });
     builder.addCase(fetchTodos.rejected, (state) => {
       state.error = "failed";
+      state.initialLoading = false;
     });
 
     // ADD TODO
@@ -152,8 +157,9 @@ const todoSlice = createSlice({
           state.items.splice(todoIndex, 1); // Remove from items
           state.completed.push(todo); // Add to completed
         }
+
+        state.status = "succeeded";
       }
-      state.status = "succeeded";
     });
 
     builder.addCase(updateCompletedTodo.rejected, (state) => {
