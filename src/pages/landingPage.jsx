@@ -9,7 +9,7 @@ import {
   Skeleton,
 } from "@mui/material";
 //import Skeleton from "@mui/material/Skeleton";
-import todoIllustration from "../assets/todo-image.jfif";
+import todoIllustration from "../assets/todo illustration 2.jpg";
 import {useMediaQuery} from "@mui/material";
 import {useState} from "react";
 import Header from "../components/navBar";
@@ -57,18 +57,39 @@ export default function LandingPage() {
                       height={"50px"}
                     />
                   )}
-                  <CardMedia
-                    component="img"
+                  <Box
                     sx={{
-                      width: "100%",
+                      position: "relative",
                       height: "auto",
-                      display: isLoading ? "none" : "block",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
-                    image={todoIllustration}
-                    onLoad={() => {
-                      setIsLoading(false);
-                    }}
-                  />
+                  >
+                    <CardMedia
+                      component="img"
+                      sx={{
+                        width: "100%",
+                        height: "auto",
+                        display: isLoading ? "none" : "block",
+                      }}
+                      image={todoIllustration}
+                      onLoad={() => {
+                        setIsLoading(false);
+                      }}
+                    />
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "100%",
+                        height: "auto",
+                        backgroundColor: "rgba(230, 73, 25, 0.5)",
+                      }}
+                    />
+                  </Box>
                 </Card>
               </Box>
               <Box sx={{display: "flex", marginTop: "20px", padding: "5px"}}>

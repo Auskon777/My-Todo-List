@@ -197,7 +197,6 @@ const Login = () => {
               )}
             </Button>
           </Box>
-          {/*{status === "failed" && <p>{error}</p>} */}
           <ToastContainer />
           <Box
             sx={{

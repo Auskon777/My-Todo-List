@@ -26,6 +26,9 @@ import {
   Typography,
   useMediaQuery,
   Paper,
+  Card,
+  CardMedia,
+  CardContent,
 } from "@mui/material";
 import TodoForm from "../components/todoForm";
 import ActiveTodoStyle from "../components/activeTodoStyle";
@@ -33,6 +36,8 @@ import CompletedTodoStyle from "../components/completedTodoStyle";
 import Header from "../components/navBar";
 import {useNavigate} from "react-router-dom";
 import LoadingSkeleton from "../components/loadingSkeleton";
+import HeroSection from "../components/hero";
+import emptyTodoLogo from "../assets/empty todo.jpg";
 
 const TodoList = () => {
   dayjs.locale("en");
@@ -130,8 +135,6 @@ const TodoList = () => {
         description: "",
         date: null,
       });
-    } else {
-      console.log("user not logged in");
     }
   };
   // handle delete function
@@ -178,6 +181,7 @@ const TodoList = () => {
     <div>
       <Header />
       <ToastContainer style={{zIndex: 9999}} />
+      <HeroSection />
       <Paper
         elevation={8}
         sx={{
@@ -186,17 +190,12 @@ const TodoList = () => {
           backgroundColor: "#2c2c2c",
           maxWidth: "700px",
           padding: "20px 10px",
-          marginTop: "200px",
+          marginTop: "-40px",
           marginLeft: isMobile ? "15px" : "auto",
           marginRight: isMobile ? "15px" : "auto",
           position: "relative",
         }}
       >
-        <Box sx={{position: "absolute", top: "-40px", left: "-0px"}}>
-          <Typography variant="h5" color={"#d6dbdf"}>
-            Create event
-          </Typography>
-        </Box>
         <Box sx={{marginLeft: "0px"}}>
           <TodoForm
             formData={formData}
@@ -214,7 +213,7 @@ const TodoList = () => {
           maxWidth: "700px",
           padding: isMobile ? "20px 10px" : "20px 20px",
           marginBottom: "100px",
-          marginTop: "100px",
+          marginTop: "150px",
           marginLeft: isMobile ? "15px" : "auto",
           marginRight: isMobile ? "15px" : "auto",
           position: "relative",
@@ -307,12 +306,54 @@ const TodoList = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                height: "100px",
+                paddingTop: "100px",
               }}
             >
-              <Typography variant="h5" color="#d6dbdf">
-                You have no events
-              </Typography>
+              <Card
+                sx={{
+                  backgroundColor: "#2c2c2c",
+                  width: 350,
+                }}
+              >
+                <Box
+                  sx={{
+                    position: "relative",
+                    height: 200,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    image={emptyTodoLogo}
+                    height="80%"
+                    alt="todo-Logo"
+                    sx={{
+                      objectFit: "cover",
+                      //objectPosition: "center",
+                      width: "50%",
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "50%",
+                      height: "80%",
+                      backgroundColor: "rgba(230, 73, 25, 0.5)",
+                    }}
+                  />
+                </Box>
+
+                <CardContent sx={{textAlign: "center"}}>
+                  <Typography variant="h5" color="white">
+                    You have no events!
+                  </Typography>
+                </CardContent>
+              </Card>
             </Box>
           ) : (
             <Box>
